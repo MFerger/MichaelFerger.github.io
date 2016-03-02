@@ -15,7 +15,18 @@ $(function() {
       $('#userNameInput').val("");
     }
   });
-
+  $('#first').on('click', function() {
+      $('body').css('background', '#4C0359')
+    })
+    $('#second').on('click', function() {
+      $('body').css('background', '#803201')
+    })
+    $('#third').on('click', function() {
+      $('body').css('background', '#6E0200')
+    })
+    $('#fourth').on('click', function() {
+        $('body').css('background', '#083645')
+      })
   $('#scores').on('click', function() {
     $('.killed').slideToggle('slow', function() {})
   });
