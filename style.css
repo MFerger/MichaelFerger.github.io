@@ -60,7 +60,7 @@ body {
 }
 #play {
   margin-left: 110px;
-  
+
 }
 #inputBox {
   padding-top: 20px;
@@ -80,4 +80,25 @@ body {
 }
 .fb-share-button {
   margin-left: 150px;
+}
+.circle{
+  opacity: 0.75;
+  -webkit-animation-name: circle;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 100;
+}
+
+@-webkit-keyframes circle {
+  from {
+    -webkit-transform: scale(1.0);
+    opacity: 0.75;
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+    opacity: 1.0;
+  }
+  to {
+    -webkit-transform: scale(1.0);
+    opacity: 0.75;
+  }
 }

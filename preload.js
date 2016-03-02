@@ -2,6 +2,7 @@ $(function() {
   $('#killed').hide();
 
   $('#play').on('click', function(event) {
+    $('#scores').addClass('circle');
     if ($('input[name=input]').val().length === 0) {
       alert("Please type in your name.");
       $("#userNameInput").focus();
@@ -15,6 +16,9 @@ $(function() {
       $('#userNameInput').val("");
     }
   });
+  $('#scores').on('click', function() {
+    $(this).removeClass('circle');
+  })
   $('#first').on('click', function() {
       $('body').css('background', '#4C0359')
     })
