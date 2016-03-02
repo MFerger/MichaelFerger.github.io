@@ -122,6 +122,7 @@ function ballHitBrick(asteroid, ship) {
       alert('this is a test')
       location.reload();
     }
+    
     var killTween = game.add.tween(ship.scale);
     killTween.to({x:0,y:0}, 120, Phaser.Easing.Linear.None);
     killTween.onComplete.addOnce(function(){
