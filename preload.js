@@ -19,5 +19,5 @@ $(function() {
   $('#scores').on('click', function() {
     $('.killed').slideToggle('slow', function() {})
   });
-
+// end
 })
