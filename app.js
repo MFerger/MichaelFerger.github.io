@@ -24,6 +24,8 @@ function preload() {
     game.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
     game.scale.pageAlignHorizontally = true;
     game.scale.pageAlignVertically = true;
+
+    //load the images into the game
     game.load.image('trampoline', 'assets/tramp.png');
     game.load.image('ship', 'assets/ship.png');
     game.load.image('asteroid', 'assets/asteroid.png');
@@ -122,7 +124,7 @@ function ballHitBrick(asteroid, ship) {
       alert('this is a test')
       location.reload();
     }
-    
+
     var killTween = game.add.tween(ship.scale);
     killTween.to({x:0,y:0}, 120, Phaser.Easing.Linear.None);
     killTween.onComplete.addOnce(function(){

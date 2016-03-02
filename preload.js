@@ -15,6 +15,7 @@ $(function() {
       $('#userName').text(value)
       $('#userNameInput').val("");
     }
+    $('#play').hide();
   });
   $('#scores').on('click', function() {
     $(this).removeClass('circle');
