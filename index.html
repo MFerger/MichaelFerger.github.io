@@ -2,8 +2,13 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
+<meta charset="UTF-8">
+<title>Space Bounce!</title>
+<meta property="og:url"                content="http://mferger.github.io/MichaelFerger.github.io/" />
+<meta property="og:title"              content="Space Bounce!" />
+<meta property="og:description"        content="A twist on the classic game Breakout!" />
+<meta property="og:image"              content="http://imgur.com/pIWDvi8" />
+
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js" charset="utf-8"></script>
   <link rel="stylesheet" href="style.css">
@@ -18,23 +23,57 @@
 </head>
 
 <body>
+  <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '981744861913644',
+      xfbml      : true,
+      version    : 'v2.5'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#">Space Bounce!</a>
-        <p class="navbar-text ">Welcome to my site</p>
+        <p class="navbar-text ">Try this site on mobile!</p>
       </div>
     </div>
   </nav>
 
   <div class="test" id="testing"></div>
   <div id="lSideBar">
+    <br>
     <div id="inputBox">
       <h3 id='usersNameInput'>Input your name here!</h3>
       <input id='userNameInput' type="text" name="input" value="">
     </div>
-    <br>
+    <br><br>
+    <div id='radioButtons'>
+      <h3 id='changeButtons'>Try out some other backgrounds!</h3>
+      <div id='buttonss'>
+        <button type="radio" name="button" id='first'>Purple</button>
+        <button type="radio" name="button" id='second'>Burnt Orange</button>
+        <button type="radio" name="button" id='third'>Dark Red</button>
+        <button type="radio" name="button" id='fourth'>Original</button>
+      </div>
+  </div><br><br>
+    <div id='playButton'>
     <button id="play" name="button">Click me to play!</input>
+    </div><br><br>
+    <div id='share'>
+      <h3 id='sharing'>Share this site to Facebook!</h3><br>
+  <div id='shareButton' class="fb-share-button" data-href="http://mferger.github.io/MichaelFerger.github.io/" data-layout="button"></div>
+    </div>
+    <br>
 
   </div>
   <div id="rSideBar">

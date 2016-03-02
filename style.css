@@ -40,7 +40,7 @@ body {
   color: limegreen;
   font-size: 45px;
 }
-.killed, #usersNameInput {
+.killed, #usersNameInput, #changeButtons, #sharing {
   text-align: center;
   color: limegreen;
 }
@@ -61,4 +61,23 @@ body {
 #play {
   margin-left: 110px;
   
+}
+#inputBox {
+  padding-top: 20px;
+}
+#usersNameInput, #changeButtons {
+    font-size: 30px;
+}
+#buttonss {
+  margin-left: 50px;
+}
+#first, #second, #third, #fourth {
+  width: 260px;
+  display: block;
+  margin-top: 20px;
+  background-color: darkblue;
+  color: white;
+}
+.fb-share-button {
+  margin-left: 150px;
 }
