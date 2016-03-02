@@ -1,0 +1,63 @@
+@import url(https://fonts.googleapis.com/css?family=Orbitron);
+body {
+  font-family: Orbitron;
+}
+body {
+  background-color: #083645;
+}
+#testing {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  margin-left: 25.69%;
+  background-color: blue;
+  margin-top: -1.40%;
+  opacity: 0.3;
+}
+#lSideBar {
+  position: relative;
+  left: 0;
+  width: 370px;
+  height: 701px;
+  border: 1px solid black;
+  margin-top: -1.4%;
+}
+#rSideBar {
+  position: absolute;
+  right: 0;
+  top: 72px;
+  width: 370px;
+  height: 701px;
+  border: 1px solid black;
+  margin-top: -1.4%;
+}
+#footer {
+  height: 52px;
+  background-color: #1d2021;
+}
+.stats {
+  text-align: center;
+  color: limegreen;
+  font-size: 45px;
+}
+.killed, #usersNameInput {
+  text-align: center;
+  color: limegreen;
+}
+.totals {
+  font-size: 20px;
+}
+#scores {
+  margin-left: 50px;
+  font-size: 25px;
+}
+#eKilled, #eScore, #eLives, #eName {
+  margin-top: 40px;
+  font-size: 25px;
+}
+#userNameInput {
+  margin-left: 80px;
+}
+#play {
+  margin-left: 110px;
+}
