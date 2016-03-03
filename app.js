@@ -1,6 +1,9 @@
-var game = new Phaser.Game(700, 700, Phaser.AUTO, null, {preload: preload, create: create, update: update});
+var game = new Phaser.Game(700, 700, Phaser.AUTO, null, {
+  preload: preload,
+  create: create,
+  update: update
+});
 
-var asteroid;
 var trampoline;
 var ships;
 var newBrick;
@@ -9,154 +12,213 @@ var scoreText;
 var score = 0;
 var lives = 3;
 var shipsLeft = 24;
+var killed = 0;
 var shipsLeftText;
+var asteroid;
 var livesText;
 var lifeLostText;
 var playing = false;
 var startButton;
 var space;
 var startText;
-var killed = 0;
+var bounds;
 var lastScore = localStorage.getItem("score");
 
-
+//Preload images and scaling options
 function preload() {
-    game.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
-    game.scale.pageAlignHorizontally = true;
-    game.scale.pageAlignVertically = true;
+  //Set game to not automatically adjust, and center horizontally/vertically
+  game.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
+  game.scale.pageAlignHorizontally = true;
+  game.scale.pageAlignVertically = true;
 
-    //load the images into the game
-    game.load.image('trampoline', 'assets/tramp.png');
-    game.load.image('ship', 'assets/ship.png');
-    game.load.image('asteroid', 'assets/asteroid.png');
-    game.load.image('button', 'assets/tramp.png');
-    game.load.image('space', 'assets/space.png');
-    this.game.add.text(0, 0, "fix", {font:"1px Orbitron", fill:"#FFFFFF"});
+  //Load the images into the game
+  game.load.image('trampoline', 'assets/tramp.png');
+  game.load.image('ship', 'assets/ship.png');
+  game.load.image('asteroid', 'assets/asteroid.png');
+  game.load.image('button', 'assets/tramp.png');
+  game.load.image('space', 'assets/space.png');
+  game.load.image('bounds', 'assets/bounds.png');
+  //Preload in google font so it loads in the preload state
+  this.game.add.text(0, 0, "fix", {
+    font: "1px Orbitron",
+    fill: "#FFFFFF"
+  });
 
 }
-
+//Create new assets to work with in the game
 function create() {
-    space = game.add.tileSprite(0, 0, 700, 700, 'space');
-    game.physics.startSystem(Phaser.Physics.ARCADE);
-    game.physics.arcade.checkCollision.down = false;
+  //Add background image
+  space = game.add.tileSprite(0, 0, 700, 700, 'space');
+  //Set physics type, Arcade would suit this type of game
+  game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    asteroid = game.add.sprite(350, 490, 'asteroid');
-    asteroid.anchor.set(0.5);
-    game.physics.enable(asteroid, Phaser.Physics.ARCADE);
-    asteroid.body.collideWorldBounds = true;
-    asteroid.body.bounce.set(1);
-    asteroid.checkWorldBounds = true;
-    asteroid.events.onOutOfBounds.add(ballLeaveScreen, this);
+  //Create asteroid from the preload image 'asteroid' and place it at x:350, y:490
+  asteroid = game.add.sprite(350, 490, 'asteroid');
+  //Positioning the asteroid in the middle of the page
+  asteroid.anchor.set(0.5);
+  //Give the asteroid physics 'arcade' type
+  game.physics.enable(asteroid, Phaser.Physics.ARCADE);
+  //Set the asteroid to collide with the walls
+  asteroid.body.collideWorldBounds = true;
+  //Make the bottom ('down') of the screen have no collision
+  game.physics.arcade.checkCollision.down = false;
+  //Give the asteroid a bounciness of 1. Thanks Arcade Physics
+  asteroid.body.bounce.set(1);
+  //Checks to see if it left so we can add to score var later
+  asteroid.checkWorldBounds = true;
+  /* Sets an event handler if it leaves screen, runs "ballLeaveScreen"
+  function and passes "this" asteroid through the function*/
+  asteroid.events.onOutOfBounds.add(ballLeaveScreen, this);
 
-    trampoline = game.add.sprite(350, 640, 'trampoline');
-    game.physics.enable(trampoline, Phaser.Physics.ARCADE);
-    trampoline.anchor.set(0.5,0.5)
-    trampoline.body.immovable = true;
+  trampoline = game.add.sprite(350, 640, 'trampoline');
+  game.physics.enable(trampoline, Phaser.Physics.ARCADE);
+  trampoline.anchor.set(0.5, 0.5)
+    //Doesnt let any other sprite pass through the trampoline
+  trampoline.body.immovable = true;
 
-    createShips();
+  //Adds starting text to the screen at 350,350 - the center of the canvas
+  startText = game.add.text(350, 350, 'Click the Trampoline!', {
+    font: '20px Orbitron',
+    fill: 'limegreen'
+  });
+  startText.anchor.set(0.5);
+  //Shows the text
+  startText.visible = true;
 
-    startText = game.add.text(350, 350, 'Click the Trampoline!', {font: '20px Orbitron', fill: 'limegreen'});
-    startText.anchor.set(0.5);
-    startText.visible = true;
+  shipsLeftText = game.add.text(280, 5, 'Enemies left: ' + shipsLeft, {
+    font: '20px Orbitron',
+    fill: 'limegreen'
+  });
+  shipsLeftText.visible = false;
+  scoreText = game.add.text(5, 5, 'Score: 0', {
+    font: '20px Orbitron',
+    fill: 'limegreen'
+  });
+  scoreText.visible = false;
 
-    shipsLeftText = game.add.text(280, 5, 'Enemies left: '+shipsLeft, {font: '20px Orbitron', fill: 'limegreen'});
-    shipsLeftText.visible = false;
-    scoreText = game.add.text(5, 5, 'Score: 0', { font: '20px Orbitron', fill: 'limegreen'});
-    scoreText.visible = false;
+  livesText = game.add.text(game.world.width - 5, 5, 'Lives: ' + lives, {
+    font: '20px Orbitron',
+    fill: 'limegreen'
+  });
+  livesText.anchor.set(1, 0);
+  livesText.visible = false;
 
-    livesText = game.add.text(game.world.width-5, 5, 'Lives: '+lives, { font: '20px Orbitron', fill: 'limegreen' });
-    livesText.anchor.set(1,0);
-    livesText.visible = false;
+  lifeLostText = game.add.text(350, 350, 'Life lost! Click anywhere to start again.', {
+    font: '20px Orbitron',
+    fill: 'limegreen'
+  });
+  lifeLostText.anchor.set(0.5);
+  lifeLostText.visible = false;
 
-    lifeLostText = game.add.text(350, 350, 'Life lost! Click to start again.', { font: '20px Orbitron', fill: 'limegreen' });
-    lifeLostText.anchor.set(0.5);
-    lifeLostText.visible = false;
-
-    startButton = game.add.button(350, 640, 'button', startGame, this, 1, 0, 2);
-    startButton.anchor.set(0.5);
-
+  /*Add start button for game to start at position 350,640. Use 'button' from Preload
+  and assign 'this' button.*/
+  startButton = game.add.button(350, 640, 'button', startGame, this);
+  startButton.anchor.set(0.5);
+  //Running create ships function to make the alien ships
+  createShips();
 }
+//Sets what to update on every frame
 function update() {
+  //Makes the background image move vertically at a speed of 2
   space.tilePosition.y += 2;
-    game.physics.arcade.collide(asteroid, trampoline, ballHitPaddle);
-    game.physics.arcade.collide(asteroid, ships, ballHitBrick);
-    if(playing) {
-        game.physics.arcade.moveToPointer(trampoline, 60, game.input.activePointer, 150);
-    }
+  //Gives asteroid and trampoline collision then runs the asteroidBounce function
+  game.physics.arcade.collide(asteroid, trampoline, asteroidBounce);
+  //Same thing with the asteroid and ships, then the asteroidShip function
+  game.physics.arcade.collide(asteroid, ships, asteroidShip);
+  /*If the game is 'playing', run the 'move to pointer' function. Set the trampoline to
+  follow, will move at a speed of 60px/s, follow the mouse, and gives it 150ms to get to the mouse*/
+  if (playing) {
+    game.physics.arcade.moveToPointer(trampoline, 60, game.input.activePointer, 150);
+  }
 }
 
 function createShips() {
-    shipInfo = {
-        width: 70,
-        height: 30,
-        count: {
-            row: 8,
-            col: 3
-        },
-        offset: {
-            top: 50,
-            left: 60
-        },
-        padding: 10
+  //Add ships to a 'container group' for sprites and images
+  ships = game.add.group();
+  //for loop for 3 rows
+  for (i = 0; i < 3; i++) {
+    //for loop for 8 columns
+    for (j = 0; j < 8; j++) {
+      /*X variable for width of ship. On each index number * width of object(70px) and padding of 13px around and offset of 60px*/
+      var shipX = (j * (70 + 13)) + 60;
+      //Same thing with height of 30px and an offset of 50px
+      var shipY = (i * (30 + 13)) + 50;
+      var newAlien = game.add.sprite(shipX, shipY, 'ship');
+      game.physics.enable(newAlien, Phaser.Physics.ARCADE);
+      newAlien.body.immovable = true;
+      newAlien.anchor.set(0.5);
+      //Assigns the new ships to the 'ships' variable
+      ships.add(newAlien);
     }
-    ships = game.add.group();
-    for(c=0; c<shipInfo.count.col; c++) {
-        for(r=0; r<shipInfo.count.row; r++) {
-            var shipX = (r*(shipInfo.width+shipInfo.padding))+shipInfo.offset.left;
-            var shipY = (c*(shipInfo.height+shipInfo.padding))+shipInfo.offset.top;
-            newBrick = game.add.sprite(shipX, shipY, 'ship');
-            game.physics.enable(newBrick, Phaser.Physics.ARCADE);
-            newBrick.body.immovable = true;
-            newBrick.anchor.set(0.5);
-            ships.add(newBrick);
-        }
-    }
+  }
 }
-function ballHitBrick(asteroid, ship) {
-    shipsLeft -= 1;
-    score += 100;
-    $('#scoreVal').text(score);
-    killed += 1;
-    $('#numKilled').text(shipsLeft);
-    if(shipsLeft === 0){
-      alert('Hey! You won! You scored: '+score+'. \n The last score was: '+lastScore)
-      localStorage.setItem("score", score);
-      alert('this is a test')
-      location.reload();
-    }
+function asteroidShip(asteroid, ship) {
+  shipsLeft -= 1;
+  score += 100;
+  $('#scoreVal').text(score);
+  killed += 1;
+  $('#numKilled').text(shipsLeft);
+  //If the user kills all the ships
+  if (shipsLeft === 0) {
+    //Alert you won with your score, and the last score from the local storage
+    alert('Hey! You won! You scored: ' + score + '. \n The last score was: ' + lastScore)
+    //Set a new score local storage value
+    localStorage.setItem("score", score);
+    //Refresh the screen
+    location.reload();
+  }
+  //Create a 'tween' for the ship kill animation
+  var killTween = game.add.tween(ship.scale);
+  //Have it shrink to the center
+  killTween.to({
+    x: 0,
+    y: 0
+    //In 120ms
+  }, 120, Phaser.Easing.Linear.None);
+  //Once done, run a function that 'kills' or removes the ship
+  killTween.onComplete.addOnce(function() {
+    ship.kill();
+  }, this);
+  //Runs the animation
+  killTween.start();
+}
 
-    var killTween = game.add.tween(ship.scale);
-    killTween.to({x:0,y:0}, 120, Phaser.Easing.Linear.None);
-    killTween.onComplete.addOnce(function(){
-      ship.kill();
-    }, this);
-    killTween.start();
-}
 function ballLeaveScreen() {
-    lives--;
-    $('#livesLeft').text(lives);
-    if(lives) {
-        // livesText.setText('Lives: '+lives);
-        lifeLostText.visible = true;
-        asteroid.reset(350, 490);
-        trampoline.reset(350, 655);
-        playing = false;
-        game.input.onDown.addOnce(function(){
-            lifeLostText.visible = false;
-            playing = true;
-        }, this);
-    }
-    else {
-        localStorage.setItem("score", score);
-        alert('You lost, game over! You scored: '+score+'. \n The last score was: '+lastScore+'.')
-        location.reload();
-    }
+  lives--;
+  $('#livesLeft').text(lives);
+  if (lives) {
+    lifeLostText.visible = true;
+    //Resets the asteroid at x:350, y:490
+    asteroid.reset(350, 490);
+    trampoline.reset(350, 655);
+    //Stop playing
+    playing = false;
+    //On click, run the function
+    game.input.onDown.addOnce(function() {
+      //Hide the text
+      lifeLostText.visible = false;
+      //Start playing again
+      playing = true;
+    }, this);
+    //If you died
+  } else {
+    //Set your score to local storage
+    localStorage.setItem("score", score);
+    alert('You lost, game over! You scored: ' + score + '. \n The last score was: ' + lastScore + '.')
+    //Reload the page
+    location.reload();
+  }
 }
-function ballHitPaddle(asteroid, trampoline) {
-    asteroid.body.velocity.x = -1*5*(trampoline.x-asteroid.x);
+function asteroidBounce(asteroid, trampoline) {
+  //Velocity for bouncing off platform
+  asteroid.body.velocity.x = -1 * 5 * (trampoline.x - asteroid.x);
 }
+
 function startGame() {
+  //Remove the start button
   startButton.destroy();
-    startText.alpha = 0;
-    playing = true;
+  //Remove starting text
+  startText.alpha = 0;
+  //Start playing
+  playing = true;
 }
