@@ -44,18 +44,18 @@ $(function() {
     location.reload();
   })
 })
-var s = 0,
-  ms = 0,
-  sEl = document.getElementById('s'),
-  msEl = document.getElementById('ms'),
+var seconds = 0,
+  mili = 0,
+  secondsElement = document.getElementById('seconds'),
+  miliElement = document.getElementById('mili'),
   play = false;
 stopwatch = setInterval(function() {
   if (!play) return;
-  if (ms === 99) {
-    s += 1;
-    ms = 0;
+  if (mili === 99) {
+    seconds += 1;
+    mili = 0;
   } else {
-    ms += 1;
+    mili += 1;
   }
   update();
 
@@ -63,16 +63,12 @@ stopwatch = setInterval(function() {
 
 function update() {
 
-  sEl.innerText = ''+s+'s';
-  msEl.innerText = ''+ms+'ms';
-}
-function stopIt(){
-  // $('#s').val() = 0;
-  // $('#ms').val() = 0;
+  secondsElement.innerText = ''+seconds+'s';
+  miliElement.innerText = ''+mili+'ms';
 }
 function start() {
   if (!play) {
-    s = 0, ms = 0;
+    seconds = 0, mili = 0;
     update();
   }
   play = !play;

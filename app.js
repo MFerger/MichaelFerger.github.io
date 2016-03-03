@@ -159,8 +159,8 @@ function asteroidShip(asteroid, ship) {
   //If the user kills all the ships
   if (shipsLeft === 0) {
     start();
-    localStorage.setItem("seconds", s);
-    localStorage.setItem("miliseconds", ms);
+    localStorage.setItem("seconds", seconds);
+    localStorage.setItem("miliseconds", mili);
     localStorage.setItem("score", score);
     var localSeconds = localStorage.getItem("seconds");
     var localMili = localStorage.getItem("miliseconds");
@@ -173,8 +173,8 @@ function asteroidShip(asteroid, ship) {
     var modalHighWin = 'Nice job! You beat the best time and got a new high score! \n The new high score is: <span class="red-text">'+localSeconds+'</span> seconds and <span class="red-text">'+localMili+'</span> miliseconds!';
 
     if (highSeconds == null){
-      localStorage.setItem('highseconds', s);
-      localStorage.setItem('highmili', ms);
+      localStorage.setItem('highseconds', seconds);
+      localStorage.setItem('highmili', mili);
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
       document.getElementById("highScoreTime").innerHTML = youGotIt;
@@ -233,8 +233,8 @@ function ballLeaveScreen() {
   } if (lives == 0) {
     start();
     localStorage.setItem("score", score);
-    localStorage.setItem("seconds", s);
-    localStorage.setItem("miliseconds", ms);
+    localStorage.setItem("seconds", seconds);
+    localStorage.setItem("miliseconds", mili);
     var lastScore = localStorage.getItem("score");
     var localSeconds = localStorage.getItem("seconds");
     var localMili = localStorage.getItem("miliseconds");
@@ -253,8 +253,8 @@ function ballLeaveScreen() {
 }
 function didntWin (){
   localStorage.setItem("score", score);
-  localStorage.setItem("seconds", s);
-  localStorage.setItem("miliseconds", ms);
+  localStorage.setItem("seconds", seconds);
+  localStorage.setItem("miliseconds", mili);
   var modalScore = 'Game over. Your score was <span class="red-text">'+lastScore+'</span>!';
   var modalTime = 'Your time was <span class="red-text">'+localSeconds+'</span> seconds and <span class="red-text">'+localMili+'</span> miliseconds!';
   var modalTitleLost = 'Sorry! You lost the game!';

@@ -40,7 +40,7 @@ body {
   color: limegreen;
   font-size: 45px;
 }
-.killed, #usersNameInput, #changeButtons, #sharing, #s, #ms {
+.killed, #usersNameInput, #changeButtons, #sharing, #seconds, #mili {
   text-align: center;
   color: limegreen;
 }
@@ -125,7 +125,7 @@ input:focus {
 #playButton {
   display: flex;
 }
-#s, #ms {
+#seconds, #mili {
   padding-left: 50px;
   padding-top: 12px;
   font-size: 25px;
