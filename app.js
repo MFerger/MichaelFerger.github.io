@@ -174,7 +174,9 @@ function asteroidShip(asteroid, ship) {
 
     if (highSeconds == null){
       localStorage.setItem('highseconds', seconds);
+      highSeconds = localStorage.getItem("highseconds");
       localStorage.setItem('highmili', mili);
+      highMili = localStorage.getItem("highmili");
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
       document.getElementById("highScoreTime").innerHTML = youGotIt;
