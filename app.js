@@ -241,11 +241,14 @@ function ballLeaveScreen() {
     var modalScore = 'Game over. Your score was <span class="red-text">'+lastScore+'</span>!';
     var modalTime = 'Your time was <span class="red-text">'+localSeconds+'</span> seconds and <span class="red-text">'+localMili+'</span> miliseconds!';
     var modalTitleLost = 'Sorry! You lost the game!';
+    var canYou = 'Can you beat the game and get a new lowest completion time?';
     $('#modalButton').click();
     $('#modalButton').show();
     document.getElementById("modalTitle").innerHTML = modalTitleLost;
     document.getElementById("youLost").innerHTML = modalScore;
     document.getElementById("yourTime").innerHTML = modalTime;
+    document.getElementById("canyou").innerHTML = canYou;
+
   }
 }
 function didntWin (){
