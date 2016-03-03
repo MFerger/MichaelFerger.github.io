@@ -173,6 +173,8 @@ function asteroidShip(asteroid, ship) {
     var modalHighWin = 'Nice job! You beat the best time and got a new high score! \n The new high score is: <span class="red-text">'+localSeconds+'</span> seconds and <span class="red-text">'+localMili+'</span> miliseconds!';
 
     if (highSeconds == null){
+      $('#modalButton').click();
+      $('#modalButton').show();
       localStorage.setItem('highseconds', seconds);
       highSeconds = localStorage.getItem("highseconds");
       localStorage.setItem('highmili', mili);
@@ -180,22 +182,20 @@ function asteroidShip(asteroid, ship) {
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
       document.getElementById("highScoreTime").innerHTML = youGotIt;
-      $('#modalButton').click();
-      $('#modalButton').show();
     }
     if (localSeconds > highSeconds) {
+      $('#modalButton').show();
+      $('#modalButton').click();
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
       document.getElementById("highScoreTime").innerHTML = modalHighLost;
-      $('#modalButton').click();
-      $('#modalButton').show();
     }
     if (localSeconds < highSeconds) {
+      $('#modalButton').click();
+      $('#modalButton').show();
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
       document.getElementById("highScoreTime").innerHTML = modalHighWin;
-      $('#modalButton').click();
-      $('#modalButton').show();
     }
   }
   //Create a 'tween' for the ship kill animation

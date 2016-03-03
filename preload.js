@@ -2,13 +2,20 @@ $(function() {
   $('#killed').hide();
   $('#start').hide();
   $('#modalButton').hide();
+  if (localStorage.name != undefined){
+  var getName = localStorage.getItem('name');
+  $('#userName').text(getName);
+}
 //   $('#heythere').on('click', function (event) {
 //     alert();
 //     // event.preventDefault();
 // })
 // $('#myModal').modal('toggle');
   $('#play').on('click', function(event) {
-    if ($('input[name=input]').val().length === 0) {
+    var namee = $('input[name=input]').val();
+    console.log(namee);
+    localStorage.setItem('name', namee);
+    if (namee.length === 0) {
       alert("Please type in your name.");
       $("#userNameInput").focus();
       event.preventDefault();
