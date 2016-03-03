@@ -1,21 +1,25 @@
 $(function() {
   $('#killed').hide();
-
+  $('#start').hide();
+  $('#modalButton').hide();
+//   $('#heythere').on('click', function (event) {
+//     alert();
+//     // event.preventDefault();
+// })
+// $('#myModal').modal('toggle');
   $('#play').on('click', function(event) {
-    $('#scores').addClass('circle');
     if ($('input[name=input]').val().length === 0) {
       alert("Please type in your name.");
       $("#userNameInput").focus();
       event.preventDefault();
     } else {
-      $('#testing').css({
-        'display': 'none'
-      });
+      $('#scores').addClass('circle');
+      $('#testing').css({'display': 'none'});
       var value = $('input:text[name=input]').val();
       $('#userName').text(value)
       $('#userNameInput').val("");
+      // $('#play').css('opacity', '0');
     }
-    $('#play').hide();
   });
   $('#scores').on('click', function() {
     $(this).removeClass('circle');
@@ -36,4 +40,40 @@ $(function() {
     $('.killed').slideToggle('slow', function() {})
   });
 // end
+  $('#reload').on('click', function(){
+    location.reload();
+  })
 })
+var s = 0,
+  ms = 0,
+  sEl = document.getElementById('s'),
+  msEl = document.getElementById('ms'),
+  play = false;
+stopwatch = setInterval(function() {
+  if (!play) return;
+  if (ms === 99) {
+    s += 1;
+    ms = 0;
+  } else {
+    ms += 1;
+  }
+  update();
+
+}, 1);
+
+function update() {
+
+  sEl.innerText = ''+s+'s';
+  msEl.innerText = ''+ms+'ms';
+}
+function stopIt(){
+  // $('#s').val() = 0;
+  // $('#ms').val() = 0;
+}
+function start() {
+  if (!play) {
+    s = 0, ms = 0;
+    update();
+  }
+  play = !play;
+}

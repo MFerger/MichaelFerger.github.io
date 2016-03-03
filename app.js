@@ -21,8 +21,7 @@ var playing = false;
 var startButton;
 var space;
 var startText;
-var bounds;
-var lastScore = localStorage.getItem("score");
+
 
 //Preload images and scaling options
 function preload() {
@@ -37,7 +36,6 @@ function preload() {
   game.load.image('asteroid', 'assets/asteroid.png');
   game.load.image('button', 'assets/tramp.png');
   game.load.image('space', 'assets/space.png');
-  game.load.image('bounds', 'assets/bounds.png');
   //Preload in google font so it loads in the preload state
   this.game.add.text(0, 0, "fix", {
     font: "1px Orbitron",
@@ -160,12 +158,43 @@ function asteroidShip(asteroid, ship) {
   $('#numKilled').text(shipsLeft);
   //If the user kills all the ships
   if (shipsLeft === 0) {
-    //Alert you won with your score, and the last score from the local storage
-    alert('Hey! You won! You scored: ' + score + '. \n The last score was: ' + lastScore)
-    //Set a new score local storage value
+    start();
+    localStorage.setItem("seconds", s);
+    localStorage.setItem("miliseconds", ms);
     localStorage.setItem("score", score);
-    //Refresh the screen
-    location.reload();
+    var localSeconds = localStorage.getItem("seconds");
+    var localMili = localStorage.getItem("miliseconds");
+    var highSeconds = localStorage.getItem("highseconds");
+    var highMili = localStorage.getItem("highmili");
+    var modalTitleWin = 'Yay! You beat the game! Not too hard was it...';
+    var modalTime = 'Your time was <span class="red-text">'+localSeconds+'</span> seconds and <span class="red-text">'+localMili+'</span> miliseconds!';
+    var youGotIt = 'You have the new high score!! WOOOOOOOO!!!';
+    var modalHighLost = 'Can you beat the game and the fastest time of:\n <span class="red-text">'+highSeconds+'</span> seconds \n and \n <span class="red-text">'+highMili+'</span> miliseconds?';
+    var modalHighWin = 'Nice job! You beat the best time and got a new high score! \n The new high score is: <span class="red-text">'+localSeconds+'</span> seconds and <span class="red-text">'+localMili+'</span> miliseconds!';
+
+    if (highSeconds == null){
+      localStorage.setItem('highseconds', s);
+      localStorage.setItem('highmili', ms);
+      document.getElementById("modalTitle").innerHTML = modalTitleWin;
+      document.getElementById("yourTime").innerHTML = modalTime;
+      document.getElementById("highScoreTime").innerHTML = youGotIt;
+      $('#modalButton').click();
+      $('#modalButton').show();
+    }
+    if (localSeconds > highSeconds) {
+      document.getElementById("modalTitle").innerHTML = modalTitleWin;
+      document.getElementById("yourTime").innerHTML = modalTime;
+      document.getElementById("highScoreTime").innerHTML = modalHighLost;
+      $('#modalButton').click();
+      $('#modalButton').show();
+    }
+    if (localSeconds < highSeconds) {
+      document.getElementById("modalTitle").innerHTML = modalTitleWin;
+      document.getElementById("yourTime").innerHTML = modalTime;
+      document.getElementById("highScoreTime").innerHTML = modalHighWin;
+      $('#modalButton').click();
+      $('#modalButton').show();
+    }
   }
   //Create a 'tween' for the ship kill animation
   var killTween = game.add.tween(ship.scale);
@@ -186,7 +215,7 @@ function asteroidShip(asteroid, ship) {
 function ballLeaveScreen() {
   lives--;
   $('#livesLeft').text(lives);
-  if (lives) {
+  if (lives > 0) {
     lifeLostText.visible = true;
     //Resets the asteroid at x:350, y:490
     asteroid.reset(350, 490);
@@ -201,13 +230,36 @@ function ballLeaveScreen() {
       playing = true;
     }, this);
     //If you died
-  } else {
-    //Set your score to local storage
+  } if (lives == 0) {
+    start();
     localStorage.setItem("score", score);
-    alert('You lost, game over! You scored: ' + score + '. \n The last score was: ' + lastScore + '.')
-    //Reload the page
-    location.reload();
+    localStorage.setItem("seconds", s);
+    localStorage.setItem("miliseconds", ms);
+    var lastScore = localStorage.getItem("score");
+    var localSeconds = localStorage.getItem("seconds");
+    var localMili = localStorage.getItem("miliseconds");
+    var modalScore = 'Game over. Your score was <span class="red-text">'+lastScore+'</span>!';
+    var modalTime = 'Your time was <span class="red-text">'+localSeconds+'</span> seconds and <span class="red-text">'+localMili+'</span> miliseconds!';
+    var modalTitleLost = 'Sorry! You lost the game!';
+    $('#modalButton').click();
+    $('#modalButton').show();
+    document.getElementById("modalTitle").innerHTML = modalTitleLost;
+    document.getElementById("youLost").innerHTML = modalScore;
+    document.getElementById("yourTime").innerHTML = modalTime;
   }
+}
+function didntWin (){
+  localStorage.setItem("score", score);
+  localStorage.setItem("seconds", s);
+  localStorage.setItem("miliseconds", ms);
+  var modalScore = 'Game over. Your score was <span class="red-text">'+lastScore+'</span>!';
+  var modalTime = 'Your time was <span class="red-text">'+localSeconds+'</span> seconds and <span class="red-text">'+localMili+'</span> miliseconds!';
+  var modalTitleLost = 'Sorry! You lost the game!';
+  document.getElementById("modalTitle").innerHTML = modalTitleLost;
+  document.getElementById("youLost").innerHTML = modalScore;
+  document.getElementById("yourTime").innerHTML = modalTime;
+  $('#modalButton').click();
+  $('#modalButton').show();
 }
 function asteroidBounce(asteroid, trampoline) {
   //Velocity for bouncing off platform
@@ -220,5 +272,6 @@ function startGame() {
   //Remove starting text
   startText.alpha = 0;
   //Start playing
+  $('#start').click();
   playing = true;
 }

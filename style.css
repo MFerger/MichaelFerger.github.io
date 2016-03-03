@@ -40,7 +40,7 @@ body {
   color: limegreen;
   font-size: 45px;
 }
-.killed, #usersNameInput, #changeButtons, #sharing {
+.killed, #usersNameInput, #changeButtons, #sharing, #s, #ms {
   text-align: center;
   color: limegreen;
 }
@@ -51,8 +51,12 @@ body {
   margin-left: 50px;
   font-size: 25px;
 }
+#modalButton{
+  margin-left: 85px;
+  font-size: 20px;
+}
 #eKilled, #eScore, #eLives, #eName {
-  margin-top: 40px;
+  margin-top: 35px;
   font-size: 25px;
 }
 #userNameInput {
@@ -60,8 +64,7 @@ body {
   margin-top: 20px;
 }
 #play {
-  margin-left: 110px;
-
+  margin-left: 40px;
 }
 #inputBox {
   padding-top: 20px;
@@ -81,6 +84,9 @@ body {
 }
 .fb-share-button {
   margin-left: 150px;
+}
+.modal-body {
+  font-size: 20px;
 }
 .circle{
   opacity: 0.75;
@@ -110,9 +116,20 @@ input:focus {
     -webkit-box-shadow: 0px 0px 52px 15px rgba(148,9,9,0.76);
     -moz-box-shadow: 0px 0px 52px 15px rgba(148,9,9,0.76);
     box-shadow: 0px 0px 52px 15px rgba(148,9,9,0.76) ;
-    -webkit-transition: all 1s ease-out;
-    -moz-transition: all 1s ease-out ;
-    -ms-transition: all 1s ease-out ;
-    -o-transition: all 1s ease-out ;
-    transition: all 1s ease-out ;
+    -webkit-transition: all 1.3s ease-out;
+    -moz-transition: all 1.3s ease-out ;
+    -ms-transition: all 1.3s ease-out ;
+    -o-transition: all 1.3s ease-out ;
+    transition: all 1.3s ease-out ;
+}
+#playButton {
+  display: flex;
+}
+#s, #ms {
+  padding-left: 50px;
+  padding-top: 12px;
+  font-size: 25px;
+}
+.red-text {
+  color: red;
 }
