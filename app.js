@@ -11,7 +11,7 @@ var shipInfo;
 var scoreText;
 var score = 0;
 var lives = 3;
-var shipsLeft = 24;
+var shipsLeft = 27;
 var killed = 0;
 var shipsLeftText;
 var asteroid;
@@ -51,7 +51,7 @@ function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
   //Create asteroid from the preload image 'asteroid' and place it at x:350, y:490
-  asteroid = game.add.sprite(350, 490, 'asteroid');
+  asteroid = game.add.sprite(400, 490, 'asteroid');
   //Positioning the asteroid in the middle of the page
   asteroid.anchor.set(0.5);
   //Give the asteroid physics 'arcade' type
@@ -68,15 +68,15 @@ function create() {
   function and passes "this" asteroid through the function*/
   asteroid.events.onOutOfBounds.add(asteroidLeavesScreen, this);
 
-  trampoline = game.add.sprite(350, 640, 'trampoline');
+  trampoline = game.add.sprite(400, 640, 'trampoline');
   game.physics.enable(trampoline, Phaser.Physics.ARCADE);
   trampoline.anchor.set(0.5, 0.5)
     //Doesnt let any other sprite pass through the trampoline
   trampoline.body.immovable = true;
   trampoline.visible = false;
   //Adds starting text to the screen at 350,350 - the center of the canvas
-  startText = game.add.text(350, 350, 'Click the Trampoline!', {
-    font: '20px Orbitron',
+  startText = game.add.text(400, 350, 'Click the Trampoline!', {
+    font: '25px Orbitron',
     fill: 'limegreen'
   });
   startText.anchor.set(0.5);
@@ -110,7 +110,7 @@ function create() {
 
   /*Add start button for game to start at position 350,640. Use 'button' from Preload
   and assign 'this' button.*/
-  startButton = game.add.button(350, 640, 'button', startGame, this);
+  startButton = game.add.button(400, 640, 'button', startGame, this);
   startButton.anchor.set(0.5);
   //Running create ships function to make the alien ships
   createShips();
@@ -136,7 +136,7 @@ function createShips() {
   //for loop for 3 rows
   for (i = 0; i < 3; i++) {
     //for loop for 8 columns
-    for (j = 0; j < 8; j++) {
+    for (j = 0; j < 9; j++) {
       /*X variable for width of ship. On each index number * width of object(70px) and padding of 13px around and offset of 60px*/
       var shipX = (j * (70 + 13)) + 60;
       //Same thing with height of 30px and an offset of 50px
