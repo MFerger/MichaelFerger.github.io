@@ -24,7 +24,7 @@ $(function() {
       event.preventDefault();
     } else {
       $('#scores').addClass('circle');
-      $('#testing').css({'display': 'none'});
+      // $('#testing').css({'display': 'none'});
       var value = $('input:text[name=input]').val();
       $('#userName').text(value)
       $('#userNameInput').val("");
