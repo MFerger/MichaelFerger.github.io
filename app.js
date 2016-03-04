@@ -1,4 +1,4 @@
-var game = new Phaser.Game(700, 700, Phaser.AUTO, null, {
+var game = new Phaser.Game(700, 700, Phaser.AUTO, 'testing', {
   preload: preload,
   create: create,
   update: update
@@ -26,7 +26,7 @@ var startText;
 //Preload images and scaling options
 function preload() {
   //Set game to not automatically adjust, and center horizontally/vertically
-  game.scale.scaleMode = Phaser.ScaleManager.NO_SCALE;
+  game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
   game.scale.pageAlignHorizontally = true;
   game.scale.pageAlignVertically = true;
 

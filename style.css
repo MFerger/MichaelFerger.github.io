@@ -10,6 +10,11 @@ body {
 body {
   background-color: #083645;
 }
+#footer{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
 #hidden {
   /*height: 30px;*/
   /*display: absolute;*/
@@ -29,30 +34,34 @@ body {
 }
 #testing {
   position: absolute;
-  display: inline-flex;;
-  width: 48.59%;
-  height: 87%;
+  /*display: inline-flex;*/
+  width: 48.5%;
+  height: 90%;
   margin-left: 25.69%;
-  background-color: blue;
-  margin-top: -1.40%;
-  opacity: 0.3;
+  background-color: black;
+  opacity: 1;
+  /*margin-top: -1%*/
 }
 #lSideBar {
-  position: relative;
+  position: absolute;
   left: 0;
-  width: 370px;
-  height: 701px;
-  border: 1px solid black;
-  margin-top: -1.4%;
+  /*top: 9%;*/
+  width: 25.8%;
+  height: 90%;
+  border: 1px solid red;
+  /*margin-top: -1.4%;*/
+}
+.navbar {
+  margin-bottom: 0;
 }
 #rSideBar {
   position: absolute;
   right: 0;
-  top: 72px;
-  width: 370px;
-  height: 701px;
-  border: 1px solid black;
-  margin-top: -1.4%;
+  /*top: 9%;*/
+  width: 25.8%;
+  height: 90%;
+  border: 1px solid red;
+  /*margin-top: -1.4%;*/
 }
 #footer {
   height: 52px;
