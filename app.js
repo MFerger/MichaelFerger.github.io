@@ -51,7 +51,7 @@ function create() {
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
   //Create asteroid from the preload image 'asteroid' and place it at x:350, y:490
-  asteroid = game.add.sprite(400, 490, 'asteroid');
+  asteroid = game.add.sprite(400, 510, 'asteroid');
   //Positioning the asteroid in the middle of the page
   asteroid.anchor.set(0.5);
   //Give the asteroid physics 'arcade' type
@@ -81,7 +81,7 @@ function create() {
   });
   startText.anchor.set(0.5);
   //Shows the text
-  startText.visible = true;
+  startText.visible = false;
 
   shipsLeftText = game.add.text(280, 5, 'Enemies left: ' + shipsLeft, {
     font: '20px Orbitron',
@@ -101,7 +101,7 @@ function create() {
   livesText.anchor.set(1, 0);
   livesText.visible = false;
 
-  lifeLostText = game.add.text(350, 350, 'Life lost! Click anywhere to start again.', {
+  lifeLostText = game.add.text(400, 350, 'Life lost! Click anywhere to start again.', {
     font: '20px Orbitron',
     fill: 'limegreen'
   });
@@ -123,6 +123,10 @@ function update() {
   game.physics.arcade.collide(asteroid, trampoline, asteroidBounce);
   //Same thing with the asteroid and ships, then the asteroidShip function
   game.physics.arcade.collide(asteroid, ships, asteroidShip);
+
+  // $('#modalButton').on('click', function() {
+  //   resetGame();
+  // });
   /*If the game is 'playing', run the 'move to pointer' function. Set the trampoline to
   follow, will move at a speed of 60px/s, follow the mouse, and gives it 150ms to get to the mouse*/
   if (playing) {
@@ -138,9 +142,9 @@ function createShips() {
     //for loop for 8 columns
     for (j = 0; j < 9; j++) {
       /*X variable for width of ship. On each index number * width of object(70px) and padding of 13px around and offset of 60px*/
-      var shipX = (j * (70 + 13)) + 60;
+      var shipX = (j * (70 + 15)) + 60;
       //Same thing with height of 30px and an offset of 50px
-      var shipY = (i * (30 + 13)) + 50;
+      var shipY = (i * (30 + 13)) + 20;
       var newAlien = game.add.sprite(shipX, shipY, 'ship');
       game.physics.enable(newAlien, Phaser.Physics.ARCADE);
       newAlien.body.immovable = true;
@@ -158,8 +162,8 @@ function asteroidShip(asteroid, ship) {
   $('#numKilled').text(shipsLeft);
   //If the user kills all the ships
   if (shipsLeft === 0) {
-    asteroid.destroy();
-    trampoline.destroy();
+    asteroid.kill();
+    trampoline.kill();
     localStorage.setItem("seconds", seconds);
     localStorage.setItem("miliseconds", mili);
     localStorage.setItem("score", score);
@@ -183,6 +187,8 @@ function asteroidShip(asteroid, ship) {
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
       document.getElementById("highScoreTime").innerHTML = youGotIt;
+      // game.state.start(game.state.current);
+      // resetGame();
     }
     if (localSeconds > highSeconds) {
       // $('#modalButton').show();
@@ -190,6 +196,8 @@ function asteroidShip(asteroid, ship) {
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
       document.getElementById("highScoreTime").innerHTML = modalHighLost;
+      // game.state.start(game.state.current);
+      // resetGame();
     }
     if (localSeconds < highSeconds) {
       $('#modalButton').click();
@@ -197,7 +205,9 @@ function asteroidShip(asteroid, ship) {
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
       document.getElementById("highScoreTime").innerHTML = modalHighWin;
+      // game.state.start(game.state.current);
     }
+    // resetGame();
     resetGame();
   }
   //Create a 'tween' for the ship kill animation
@@ -222,8 +232,8 @@ function asteroidLeavesScreen() {
   if (lives > 0) {
     lifeLostText.visible = true;
     //Resets the asteroid at x:350, y:490
-    asteroid.reset(350, 490);
-    trampoline.reset(350, 655);
+    asteroid.reset(400, 510);
+    trampoline.reset(400, 655);
     //Stop playing
     playing = false;
     //On click, run the function
@@ -278,14 +288,15 @@ function resetGame (){
   mili = 0;
   score = 0;
   lives = 3;
-  shipsLeft = 24;
+  shipsLeft = 27;
   $('#scoreVal').text(score);
   $('#numKilled').text(shipsLeft);
   $('#livesLeft').text(lives);
   secondsElement.innerText = ''+seconds+'s';
   miliElement.innerText = ''+mili+'ms';
-  start();
   game.state.start(game.state.current);
+  scoreText.visible = true;
+  start();
 }
 function startGame() {
   //Remove the start button

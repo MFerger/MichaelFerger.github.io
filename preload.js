@@ -4,6 +4,7 @@ $(function() {
     $('#killed').hide();
     $('#start').hide();
     $('#scores').hide();
+    $('#blocker').hide();
   if (localStorage.name != undefined){
   var getName = localStorage.getItem('name');
   var samePerson = false;
@@ -44,6 +45,8 @@ $(function() {
     $(this).removeClass('circle');
     $(this).text('Your scores');
     $(this).css('margin-left', '23%');
+    startText.visible = true;
+    $('#blocker').show();
   })
   $('#first').on('click', function() {
       $('body').css('background', '#4C0359')

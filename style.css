@@ -42,6 +42,17 @@ body {
   opacity: 1;
   /*margin-top: -1%*/
 }
+#blocker {
+  position: absolute;
+  /*display: inline-flex;*/
+  width: 100%;
+  height: 61%;
+  /*margin-left: 25.69%;*/
+  background-color: rgba(238, 85, 20, 0);
+  border-bottom: 1px dashed limegreen;
+  /*opacity: 1;*/
+  /*margin-top: -1%*/
+}
 #lSideBar {
   position: absolute;
   left: 0;
