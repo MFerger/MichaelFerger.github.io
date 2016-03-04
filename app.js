@@ -60,7 +60,7 @@ function create() {
   asteroid.body.collideWorldBounds = true;
   //Make the bottom ('down') of the screen have no collision
   game.physics.arcade.checkCollision.down = false;
-  //Give the asteroid a bounciness of 1. Thanks Arcade Physics
+  //Give the asteroid a bounciness of 1. Thanks Arcade Physicss
   asteroid.body.bounce.set(1);
   //Checks to see if it left so we can add to score var later
   asteroid.checkWorldBounds = true;
