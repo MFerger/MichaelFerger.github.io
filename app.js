@@ -1,4 +1,4 @@
-var game = new Phaser.Game(700, 700, Phaser.AUTO, 'testing', {
+var game = new Phaser.Game(800, 800, Phaser.AUTO, 'testing', {
   preload: preload,
   create: create,
   update: update
@@ -46,7 +46,7 @@ function preload() {
 //Create new assets to work with in the game
 function create() {
   //Add background image
-  space = game.add.tileSprite(0, 0, 700, 700, 'space');
+  space = game.add.tileSprite(0, 0, 800, 800, 'space');
   //Set physics type, Arcade would suit this type of game
   game.physics.startSystem(Phaser.Physics.ARCADE);
 
