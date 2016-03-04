@@ -64,16 +64,16 @@ function create() {
   asteroid.body.bounce.set(1);
   //Checks to see if it left so we can add to score var later
   asteroid.checkWorldBounds = true;
-  /* Sets an event handler if it leaves screen, runs "ballLeaveScreen"
+  /* Sets an event handler if it leaves screen, runs "asteroidLeavesScreen"
   function and passes "this" asteroid through the function*/
-  asteroid.events.onOutOfBounds.add(ballLeaveScreen, this);
+  asteroid.events.onOutOfBounds.add(asteroidLeavesScreen, this);
 
   trampoline = game.add.sprite(350, 640, 'trampoline');
   game.physics.enable(trampoline, Phaser.Physics.ARCADE);
   trampoline.anchor.set(0.5, 0.5)
     //Doesnt let any other sprite pass through the trampoline
   trampoline.body.immovable = true;
-
+  trampoline.visible = false;
   //Adds starting text to the screen at 350,350 - the center of the canvas
   startText = game.add.text(350, 350, 'Click the Trampoline!', {
     font: '20px Orbitron',
@@ -158,7 +158,8 @@ function asteroidShip(asteroid, ship) {
   $('#numKilled').text(shipsLeft);
   //If the user kills all the ships
   if (shipsLeft === 0) {
-    start();
+    asteroid.destroy();
+    trampoline.destroy();
     localStorage.setItem("seconds", seconds);
     localStorage.setItem("miliseconds", mili);
     localStorage.setItem("score", score);
@@ -174,7 +175,7 @@ function asteroidShip(asteroid, ship) {
 
     if (highSeconds == null){
       $('#modalButton').click();
-      $('#modalButton').show();
+      // $('#modalButton').show();
       localStorage.setItem('highseconds', seconds);
       highSeconds = localStorage.getItem("highseconds");
       localStorage.setItem('highmili', mili);
@@ -184,7 +185,7 @@ function asteroidShip(asteroid, ship) {
       document.getElementById("highScoreTime").innerHTML = youGotIt;
     }
     if (localSeconds > highSeconds) {
-      $('#modalButton').show();
+      // $('#modalButton').show();
       $('#modalButton').click();
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
@@ -192,11 +193,12 @@ function asteroidShip(asteroid, ship) {
     }
     if (localSeconds < highSeconds) {
       $('#modalButton').click();
-      $('#modalButton').show();
+      // $('#modalButton').show();
       document.getElementById("modalTitle").innerHTML = modalTitleWin;
       document.getElementById("yourTime").innerHTML = modalTime;
       document.getElementById("highScoreTime").innerHTML = modalHighWin;
     }
+    resetGame();
   }
   //Create a 'tween' for the ship kill animation
   var killTween = game.add.tween(ship.scale);
@@ -214,7 +216,7 @@ function asteroidShip(asteroid, ship) {
   killTween.start();
 }
 
-function ballLeaveScreen() {
+function asteroidLeavesScreen() {
   lives--;
   $('#livesLeft').text(lives);
   if (lives > 0) {
@@ -233,7 +235,8 @@ function ballLeaveScreen() {
     }, this);
     //If you died
   } if (lives == 0) {
-    start();
+    // asteroid.destroy();
+    // trampoline.destroy();
     localStorage.setItem("score", score);
     localStorage.setItem("seconds", seconds);
     localStorage.setItem("miliseconds", mili);
@@ -245,12 +248,12 @@ function ballLeaveScreen() {
     var modalTitleLost = 'Sorry! You lost the game!';
     var canYou = 'Can you beat the game and get a new lowest completion time?';
     $('#modalButton').click();
-    $('#modalButton').show();
+    // $('#modalButton').show();
     document.getElementById("modalTitle").innerHTML = modalTitleLost;
     document.getElementById("youLost").innerHTML = modalScore;
     document.getElementById("yourTime").innerHTML = modalTime;
     document.getElementById("canyou").innerHTML = canYou;
-
+    resetGame();
   }
 }
 function didntWin (){
@@ -264,19 +267,33 @@ function didntWin (){
   document.getElementById("youLost").innerHTML = modalScore;
   document.getElementById("yourTime").innerHTML = modalTime;
   $('#modalButton').click();
-  $('#modalButton').show();
+  // $('#modalButton').show();
 }
 function asteroidBounce(asteroid, trampoline) {
   //Velocity for bouncing off platform
   asteroid.body.velocity.x = -1 * 5 * (trampoline.x - asteroid.x);
 }
-
+function resetGame (){
+  seconds = 0;
+  mili = 0;
+  score = 0;
+  lives = 3;
+  shipsLeft = 24;
+  $('#scoreVal').text(score);
+  $('#numKilled').text(shipsLeft);
+  $('#livesLeft').text(lives);
+  secondsElement.innerText = ''+seconds+'s';
+  miliElement.innerText = ''+mili+'ms';
+  start();
+  game.state.start(game.state.current);
+}
 function startGame() {
   //Remove the start button
   startButton.destroy();
   //Remove starting text
   startText.alpha = 0;
   //Start playing
+  trampoline.visible = true;
   $('#start').click();
   playing = true;
 }

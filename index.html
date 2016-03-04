@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-<meta charset="UTF-8">
-<title>Space Bounce!</title>
-<meta property="og:url"                content="http://mferger.github.io/MichaelFerger.github.io/" />
-<meta property="og:title"              content="Space Bounce!" />
-<meta property="og:description"        content="A twist on the classic game Breakout!"/>
-<meta property="og:image"              content="http://i.imgur.com/pIWDvi8.png"/>
+<head profile="http://mferger.github.io/MichaelFerger.github.io/">
+  <link rel="icon" type="image/png" href="assets/ship.png">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js" charset="utf-8"></script>
+  <meta charset="UTF-8">
+  <title>Space Bounce!</title>
+  <meta property="og:url" content="http://mferger.github.io/MichaelFerger.github.io/" />
+  <meta property="og:title" content="Space Bounce!" />
+  <meta property="og:description" content="A twist on the classic game Breakout!" />
+  <meta property="og:image" content="http://i.imgur.com/pIWDvi8.png" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.js" charset="utf-8"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.1/animate.min.css">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style.css">
@@ -17,30 +20,33 @@
   <script src="phaser.min.js"></script>
   <!-- <link href="sticky-footer.css" rel="stylesheet"> -->
   <script type="text/javascript">
-  if (screen.width <= 700) {
-    window.location = "http://mferger.github.io/mobileproject.github.io/";
-  }
-</script>
+    if (screen.width <= 700) {
+      window.location = "http://mferger.github.io/mobileproject.github.io/";
+    }
+  </script>
 </head>
 
 <body>
   <script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '981744861913644',
-      xfbml      : true,
-      version    : 'v2.5'
-    });
-  };
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId: '981744861913644',
+        xfbml: true,
+        version: 'v2.5'
+      });
+    };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -55,9 +61,12 @@
   <div id="lSideBar">
     <div id="inputBox">
       <h3 id='usersNameInput'>Input your name here!</h3>
-      <input id='userNameInput' type="text" name="input" value="" autofocus>
+      <input id='userNameInput' class='pulse animated' type="text" name="input" value="" autofocus>
     </div>
-    <br><br>
+    <br>
+    <button id="play" name="button">Save your name!</button>
+    <br>
+    <br>
     <div id='radioButtons'>
       <h3 id='changeButtons'>Try out some other backgrounds!</h3>
       <div id='buttonss'>
@@ -69,41 +78,42 @@
 
 
       <div class="modal fade" id="myModal">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id='modalTitle'></h4>
-              </div>
-              <div class="modal-body">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+              <h4 class="modal-title" id='modalTitle'></h4>
+            </div>
+            <div class="modal-body">
               <p id='youLost'></p>
               <p id='youWon'></p>
               <p id='lastScore'></p>
               <p id='yourTime'></p>
               <p id='highScoreTime'></p>
               <p id='canyou'></p>
-              </div>
-              <div class="modal-footer">
-                <a href="#" id='reload' data-dismiss="modal" class="btn btn-primary">Start a new game!</a>
-                <a href="#" id='close' data-dismiss="modal" class="btn btn-primary">Close</a>
-              </div>
+            </div>
+            <div class="modal-footer">
+              <a href="#" id='reload' data-dismiss="modal" class="btn btn-primary">Start a new game!</a>
+              <a href="#" id='close' data-dismiss="modal" class="btn btn-primary">Close</a>
             </div>
           </div>
+        </div>
       </div>
 
 
-  </div><br><br>
+    </div>
     <div id='playButton'>
-    <button id="play" name="button">Click me to play!</button>
-    <br><div id='time'>
-    <p id="seconds">0s</p> <p id="mili">00ms</p>
-  </div>
-  </div>
+      <br>
+      <div id='time'>
+        <p id="seconds">0s</p>
+        <p id="mili">00ms</p>
+      </div>
+    </div>
 
     <div id='share'>
       <h3 id='sharing'>Share this site to Facebook!</h3>
-  <div id='shareButton' class="fb-share-button" data-href="http://mferger.github.io/MichaelFerger.github.io/" data-layout="button"></div>
-  <button onclick="start();" id="start">Start</button>
+      <div id='shareButton' class="fb-share-button" data-href="http://mferger.github.io/MichaelFerger.github.io/" data-layout="button"></div>
+      <button onclick="start();" id="start">Start</button>
     </div>
     <br>
 
@@ -114,29 +124,34 @@
 
     </div>
     <br>
-    <a class="btn btn-info" id='scores'>
+    <a class="btn btn-primary" id='scores'>
     See your scores!
   </a>
     <br>
     <div class='killed' id='killed'>
-      <a class="btn btn-primary" id='eName'>
+      <a class="btn btn-info" id='eName'>
         Your Name:
       </a>
       <h4 class='totals' id='userName'>---</h4>
-      <a class="btn btn-primary" id='eKilled'>
+      <a class="btn btn-info" id='eKilled'>
         Ships Left:
       </a>
       <h4 class='totals' id='numKilled'>24</h4>
-      <a class="btn btn-primary" id='eScore'>
+      <a class="btn btn-info" id='eScore'>
         Score:
       </a>
       <h4 class='totals' id='scoreVal'>0</h4>
-      <a class="btn btn-primary" id='eLives'>
+      <a class="btn btn-info" id='eLives'>
         Lives Left:
       </a>
       <h4 class='totals' id='livesLeft'>3</h4>
     </div>
-    <a data-toggle="modal" href="#myModal" id='modalButton' class="btn btn-primary">End Game Stats</a>
+    <div id=hiddenContainer>
+      <div id='hidden'>
+        <a data-toggle="modal" href="#myModal" id='modalButton' class="btn btn-primary">End Game Stats</a>
+        <a class="btn btn-primary" id='newGame'>Start a new game!</a>
+      </div>
+    </div>
   </div>
   <div id="footer">
     <div class="container">

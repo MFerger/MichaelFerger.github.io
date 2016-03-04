@@ -10,6 +10,23 @@ body {
 body {
   background-color: #083645;
 }
+#hidden {
+  /*height: 30px;*/
+  /*display: absolute;*/
+  /*bottom: 0;*/
+  /*margin: 0 auto;*/
+  /*text-align: center;*/
+  margin-left: 1%;
+  margin-bottom: 2%;
+  /*border: 1px solid green;*/
+}
+#hiddenContainer {
+  /*border: 2px solid yellow;*/
+  position: absolute;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+}
 #testing {
   position: absolute;
   display: inline-flex;;
@@ -57,26 +74,35 @@ body {
   margin-left: 50px;
   font-size: 25px;
 }
-#modalButton{
-  margin-left: 85px;
-  font-size: 20px;
+#modalButton {
+  /*margin-left: 85px;*/
+  /*height: 40%;*/
+  width: 47%;
+  font-size: 15px;
+}
+#newGame{
+  width: 51%;
+
 }
 #eKilled, #eScore, #eLives, #eName {
-  margin-top: 35px;
+  margin-top: 40px;
   font-size: 25px;
 }
 #userNameInput {
-  margin-left: 80px;
+  margin-left: 71px;
   margin-top: 20px;
 }
 #play {
-  margin-left: 40px;
+  margin-left: 27%;
 }
 #inputBox {
   padding-top: 20px;
 }
 #usersNameInput, #changeButtons {
     font-size: 30px;
+}
+#usersNameInput {
+  margin-bottom: -3%;
 }
 #buttonss {
   margin-left: 50px;
@@ -97,7 +123,7 @@ body {
 .circle{
   opacity: 0.75;
   -webkit-animation-name: circle;
-  -webkit-animation-duration: 0.5s;
+  -webkit-animation-duration: 1s;
   -webkit-animation-iteration-count: 100;
 }
 
@@ -128,15 +154,28 @@ input:focus {
     -o-transition: all 1.3s ease-out ;
     transition: all 1.3s ease-out ;
 }
-#playButton {
-  display: flex;
+.animated {
+  animation-duration: 2.5s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
 }
+.pulse {
+  animation-name: pulse;
+  animation-duration: 1s;
+}
+#time {
+  border: 1px solid limegreen;
+  width: 40%;
+  margin-left: 28%;
+}
+/*#playButton {
+  display: flex;
+}*/
 #seconds, #mili {
-  padding-left: 50px;
-  padding-top: 12px;
+  margin-left: 5%;
+  padding-top: 10px;
   font-size: 25px;
 }
 .red-text {
   color: red;
-}
 }

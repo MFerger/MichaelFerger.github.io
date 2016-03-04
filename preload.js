@@ -1,20 +1,23 @@
 $(function() {
-  $('#killed').hide();
-  $('#start').hide();
   $('#modalButton').hide();
+  $('#newGame').hide();
+    $('#killed').hide();
+    $('#start').hide();
   if (localStorage.name != undefined){
   var getName = localStorage.getItem('name');
+  var samePerson = false;
+  // if (samePerson == false){
+  // } if (samePerson == true) {
+  //   $('#killed').show();
+  //   $('#start').show();
+  // }
   $('#userName').text(getName);
 }
-//   $('#heythere').on('click', function (event) {
-//     alert();
-//     // event.preventDefault();
-// })
-// $('#myModal').modal('toggle');
   $('#play').on('click', function(event) {
     var namee = $('input[name=input]').val();
     console.log(namee);
     localStorage.setItem('name', namee);
+    $('#userNameInput').removeClass('animated');
     if (namee.length === 0) {
       alert("Please type in your name.");
       $("#userNameInput").focus();
@@ -28,6 +31,13 @@ $(function() {
       // $('#play').css('opacity', '0');
     }
   });
+  $('#newGame').on('click', function(){
+    start();
+    resetButton();
+    // trampoline.body = null;
+    trampoline.destroy();
+    game.state.start(game.state.current);
+  })
   $('#scores').on('click', function() {
     $(this).removeClass('circle');
   })
@@ -46,7 +56,7 @@ $(function() {
   $('#scores').on('click', function() {
     $('.killed').slideToggle('slow', function() {})
   });
-// end
+//
   $('#reload').on('click', function(){
     location.reload();
   })
