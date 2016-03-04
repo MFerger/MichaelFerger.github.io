@@ -3,6 +3,7 @@ $(function() {
   $('#newGame').hide();
     $('#killed').hide();
     $('#start').hide();
+    $('#scores').hide();
   if (localStorage.name != undefined){
   var getName = localStorage.getItem('name');
   var samePerson = false;
@@ -23,6 +24,7 @@ $(function() {
       $("#userNameInput").focus();
       event.preventDefault();
     } else {
+      $('#scores').show();
       $('#scores').addClass('circle');
       // $('#testing').css({'display': 'none'});
       var value = $('input:text[name=input]').val();
@@ -40,6 +42,8 @@ $(function() {
   })
   $('#scores').on('click', function() {
     $(this).removeClass('circle');
+    $(this).text('Your scores');
+    $(this).css('margin-left', '23%');
   })
   $('#first').on('click', function() {
       $('body').css('background', '#4C0359')
